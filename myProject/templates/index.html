@@ -7,12 +7,16 @@
 		<script src="{% static 'js/jquery-1.12.3.js' %}" type="text/javascript" charset="utf-8"></script>
 		<script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
 		<script src="{% static 'js/index.js' %}" type="text/javascript" charset="utf-8"></script>
+        <script src="{% static 'js/swiper.min.js' %}"></script>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}"/>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/index-css/index.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
+
 {#        <script type="text/javascript" src="{% static 'js/abc.js' %}"></script>#}
 
 	</head>
 	<body>
+
 
 		<div class="ad_top">
 			<a href="#"><img src="{% static 'img/indeximg/banner-top.jpg' %}"></a>
@@ -752,6 +756,28 @@
 			<div class="width">
 				<div class="banner fl">
 
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            {% for img in imgs %}
+                                <div class="swiper-slide"><a href="#"><img src="{% static img.headImg %}" alt=""></a></div>
+                            {% endfor %}
+                            <script>
+                                var swiper = new Swiper('.swiper-container', {
+                                  spaceBetween: 0,
+                                  centeredSlides: true,
+                                  autoplay: {
+                                    delay: 2000,
+                                    disableOnInteraction: false
+                                  },
+                                  pagination: {
+                                    el: '.swiper-pagination',
+                                    clickable: true
+                                  }
+                                });
+                            </script>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
 
 
 					<ul class="bgimg">
@@ -2588,6 +2614,7 @@
 				</ul>
 			</div>
 		</div>
+
 	</body>
 </html>
 

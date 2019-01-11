@@ -13,4 +13,7 @@ urlpatterns = [
     #登录
     url(r'^login/$',views.login,name='login'),
 
+
+    #
+
 ]

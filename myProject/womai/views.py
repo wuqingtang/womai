@@ -141,7 +141,13 @@ def index(request):
         name = user.name
     else:
         name = None
-    return render(request,'index.html',context={'name':name})
+
+    imgs = Banner.objects.all()
+
+    return render(request,'index.html',context={'name':name,'imgs':imgs})
+
+
+
 def register(request):
     if request.method == 'GET':
         return render(request,'register.html')
@@ -187,5 +193,8 @@ def login(request):
             return redirect('wm:index')
         else:
             return HttpResponse('用户名或者密码不正确')
+
+
+
 
 
