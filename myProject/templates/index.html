@@ -16,8 +16,6 @@
 
 	</head>
 	<body>
-
-
 		<div class="ad_top">
 			<a href="#"><img src="{% static 'img/indeximg/banner-top.jpg' %}"></a>
 		</div>
@@ -26,16 +24,9 @@
 				<ul class="nav-l float">
 					<li class="float"><p><span>当前城市：</span><span id="city">北京</span><i class="arrow_down"></i></p></li>
 				</ul>
-
-
-
-
-
 				{% if name %}
                 <ul class="nav-m fl">
 					<li class="float">欢迎您,{{ name }}!</li>
-					<li class="float"><a class="log" style="color:#8cb91e" href="{% url 'wm:login' %}"></a></li>
-					<li class="float"><a class="reg" href="{% url 'wm:register' %}"></a></li>
                     <li class="float"><a class="log" style="color:#8cb91e" href="{% url 'wm:logout' %}">退出</a></li>
 				</ul>
                 {% else %}
@@ -45,10 +36,6 @@
 					<li class="float"><a class="reg" href="{% url 'wm:register' %}">注册</a></li>
 				</ul>
 				{% endif %}
-
-
-
-
 
 				<ul class="nav-r" style="margin-right: 10px;">
 					<li class="fl own"><p><a href="#"><span class="text">我的账户<i></i></span></a></p>
@@ -81,11 +68,14 @@
 								<li><a href="#">电子礼品卡</a></li>
 								<li><a href="#">兑 换 券</a></li>
 							</ul>
-
 							{% endif %}
 						</div>
 					</li>
-					<li class="cart fl"><p><a href="#"><span class="text">购物车<b>0</b>件</span></a></p></li>
+                    {% if name %}
+                        <li class="cart fl"><p><a href="{% url 'wm:cart' %}"><span class="text">购物车<b>0</b>件</span></a></p></li>
+                    {% else %}
+                        <li class="cart fl"><p><a href="#"><span class="text">购物车<b>0</b>件</span></a></p></li>
+                    {% endif %}
 					<li class="line float">|</li>
 					<li class="float own"><p><a href="#"><span class="text">客户服务<i></i></span></a></p>
 						<div class="mycount consumer">
@@ -102,9 +92,6 @@
 				</ul>
 			</div>
 		</div>
-
-
-
 		<div class="header clearfix">
 			<div class="width">
 				<div class="logo fl">
@@ -856,7 +843,7 @@
 					</div>
 					<div class="madlist-wrap">
 						<ul class="madlist">
-							<li><a class="changeimg" href="#"><img src="{% static 'img/indeximg/mad-01.jpg' %}"></a>
+							<li><a class="changeimg" href="{% url 'wm:detail' %}"><img src="{% static 'img/indeximg/mad-01.jpg' %}"></a>
 								<div class="infor">
 									<p class="item"><a href="#">维多丽白肉蜜柚2粒礼盒装</a></p>
 									<p class="infortext"><a href="#">2.4-2.8kg | 肉清甜,水分含量适</a></p>

@@ -1,50 +1,87 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>我的购物车_我买网</title>
-		<script src="../js/jquery-1.12.3.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/cart.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/cart-css/cart.css"/>
+		<script src="{% static 'js/jquery-1.12.3.js' %}" type="text/javascript" charset="utf-8"></script>
+		<script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
+		#<script src="{% static 'js/cart.js' %}" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/cart-css/cart.css' %}"/>
 	</head>
 	<body>
 		<div class="cart-content">
-			<div class="header">
-				<div class="w">
-					<ul class="nav-r">
-						<li class="mycount-wrap">
-							<a href="#">我的账户</a>
-							<i></i>
-							<div class="mycount">
-								<dl class="count-l">
-									<dt>您还没有登录</dt>
-									<dd class="nopay"><a href="#"> 待付款订单</a><i></i></dd>
-									<dd><a href="#"> 待签收订单</a></dd>
-									<dd><a href="#"> 支付卡账户</a></dd>
-									<dd><a href="#"> 优惠券/团购卡</a></dd>
-									<dd><a href="#"> 电子礼品卡</a></dd>										    
-								</dl>
-								<dl class="count-r">
-									<dt><span><a class="log" href="#">登录</a></span></dt>
-									<dd class="mymsg"><a href="#"> 我的消息</a><i></i></dd>
-									<dd><a href="#"> 我的订单</a></dd>
-									<dd><a href="#"> 我的积分</a></dd>
-									<dd><a href="#"> 我的收藏</a></dd>
-								</dl>								
-							</div>
-						</li>
-					</ul>
-					<ul class="top-login">
-						<li class="none"><span>qzuser，<a class="log" href="#">请登录</a></span></li>
-						<li class="none">|<a class="reg" style="margin-left: 14px;" href="#">免费注册</a></li>
-					</ul>
-				</div>				
-			</div>
+
+            {% if name %}
+                <div class="header">
+                    <div class="w">
+                        <ul class="nav-r">
+                            <li class="mycount-wrap">
+                                <a href="#">我的账户</a>
+                                <i></i>
+                                <div class="mycount">
+                                    <dl class="count-l">
+                                        <dt>您已登录</dt>
+                                        <dd class="nopay"><a href="#"> 待付款订单</a><i></i></dd>
+                                        <dd><a href="#"> 待签收订单</a></dd>
+                                        <dd><a href="#"> 支付卡账户</a></dd>
+                                        <dd><a href="#"> 优惠券/团购卡</a></dd>
+                                        <dd><a href="#"> 电子礼品卡</a></dd>
+                                    </dl>
+                                    <dl class="count-r">
+                                        <dt><span><a class="log" href="#">退出</a></span></dt>
+                                        <dd class="mymsg"><a href="#"> 我的消息</a><i></i></dd>
+                                        <dd><a href="#"> 我的订单</a></dd>
+                                        <dd><a href="#"> 我的积分</a></dd>
+                                        <dd><a href="#"> 我的收藏</a></dd>
+                                    </dl>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="top-login">
+                            <li class="none"><span>qzuser，<a class="log" href="#">已登录</a></span></li>
+                        </ul>
+                    </div>
+			    </div>
+
+            {% else %}
+                <div class="header">
+                    <div class="w">
+                        <ul class="nav-r">
+                            <li class="mycount-wrap">
+                                <a href="#">我的账户</a>
+                                <i></i>
+                                <div class="mycount">
+                                    <dl class="count-l">
+                                        <dt>您还没有登录</dt>
+                                        <dd class="nopay"><a href="#"> 待付款订单</a><i></i></dd>
+                                        <dd><a href="#"> 待签收订单</a></dd>
+                                        <dd><a href="#"> 支付卡账户</a></dd>
+                                        <dd><a href="#"> 优惠券/团购卡</a></dd>
+                                        <dd><a href="#"> 电子礼品卡</a></dd>
+                                    </dl>
+                                    <dl class="count-r">
+                                        <dt><span><a class="log" href="#">登录</a></span></dt>
+                                        <dd class="mymsg"><a href="#"> 我的消息</a><i></i></dd>
+                                        <dd><a href="#"> 我的订单</a></dd>
+                                        <dd><a href="#"> 我的积分</a></dd>
+                                        <dd><a href="#"> 我的收藏</a></dd>
+                                    </dl>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="top-login">
+                            <li class="none"><span>qzuser，<a class="log" href="#">请登录</a></span></li>
+                            <li class="none">|<a class="reg" style="margin-left: 14px;" href="#">免费注册</a></li>
+                        </ul>
+                    </div>
+			    </div>
+            {% endif %}
+
 			<div class="header-box w">
 				<div class="logo">
-					<a href="#"><img src="../img/registerimg/logo.jpg"/></a>
+					<a href="#"><img src="{% static 'img/registerimg/logo.jpg' %}"/></a>
 				</div>
 				<ul class="step">
 					<li></li>
@@ -184,7 +221,7 @@
 		<div class="feeter w">
 			<div class="beian">
 				<p>
-					<a href="#"><img src="../img/registerimg/beian.png"/>京公网安备 11010102000458号</a>
+					<a href="#"><img src="{% static 'img/registerimg/beian.png' %}"/>京公网安备 11010102000458号</a>
 					<span>|</span>
 					京ICP备 13003995号 
 					<span>|</span>

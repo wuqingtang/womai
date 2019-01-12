@@ -28,15 +28,16 @@
 					<div class="login-outside">
 						<div class="login-inside">
 							<h3>请登录中粮我买网</h3>
-							<form>
+							<form action="{% url 'wm:login' %}" method="post" >
+                                {% csrf_token %}
 								<div class="login-input">
-									<input type="text" name="" id="" value="" />
+									<input type="text" name="username" id="" value="" />
 									<label class="msg">用户名/邮箱/手机号</label>
 									<p><span><a href="#">忘记登录密码？</a></span></p>
 								</div>
 
 								<div class="login-input">
-									<input type="password" name="" id="" value="" />
+									<input type="password" name="password" id="" value="" />
 									<label class="msg">密码</label>
 									<!--<p><span><a href="#">看不清  换一张</a></span></p>-->
 								</div>
@@ -46,7 +47,7 @@
 									<input class="code" type="button" name="" id="" value="3E6K" />
 								</div>-->
 								<div class="login-btn">
-									<input type="button" name="" id="" value="登录" />
+									<input type="submit" name="" id="" value="登录" />
 									<a href="#">注册</a>
 								</div>
 								<div class="friend">

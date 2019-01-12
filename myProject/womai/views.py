@@ -131,16 +131,23 @@ def generate_pwd(password):
     s.update(password.encode('utf-8'))
     return s.hexdigest()
 
-def index(request):
-    #通过session, 获取token
+
+#获取token
+def gettoken(request):
+    # 通过session, 获取token
     token = request.session.get('token')
-    #通过获取的token，获取对象
+    # 通过获取的token，获取对象
     users = User.objects.filter(token=token)
     if users.count():
         user = users.first()
         name = user.name
     else:
         name = None
+    return name
+
+#首页
+def index(request):
+    name = gettoken(request)
 
     imgs = Banner.objects.all()
 
@@ -195,6 +202,11 @@ def login(request):
             return HttpResponse('用户名或者密码不正确')
 
 
+def detail(request):
+    name = gettoken(request)
+    return render(request,'detail.html',{'name':name})
 
 
-
+def cart(request):
+    name = gettoken(request)
+    return render(request,'cart.html',{'name':name})
