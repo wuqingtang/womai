@@ -125,7 +125,7 @@ def generate_token():
     s.update(token.encode('utf-8'))
     return s.hexdigest()
 
-#
+#加密密码
 def generate_pwd(password):
     s = hashlib.md5()
     s.update(password.encode('utf-8'))
@@ -153,8 +153,6 @@ def index(request):
 
     return render(request,'index.html',context={'name':name,'imgs':imgs})
 
-
-
 def register(request):
     if request.method == 'GET':
         return render(request,'register.html')
@@ -172,6 +170,7 @@ def register(request):
         request.session['token'] = user.token
         #返回首页的时候，我们需要获取session
         return redirect('wm:index')
+
 def logout(request):
     #第一种，先通过客户端cookie删除 sessionid,再去服务端删除session
     # response = redirect('wm:index')
@@ -182,7 +181,6 @@ def logout(request):
     #第二种，直接在服务端清空
     request.session.flush()
     return redirect('wm:index')
-
 
 def login(request):
     if request.method == 'GET':
@@ -201,12 +199,32 @@ def login(request):
         else:
             return HttpResponse('用户名或者密码不正确')
 
-
 def detail(request):
     name = gettoken(request)
-    return render(request,'detail.html',{'name':name})
 
+    #在商品列表点击图片后,获取对应的cookie
+    index = request.COOKIES.get('index')
+
+    if index:
+
+        shop = Shoplist.objects.get(id=int(index) + 1)
+        pathstr = shop.zoom
+        pathlist = pathstr.split(',')
+
+    else:
+        shop = None
+
+
+
+    return render(request,'detail.html',{'name':name,'shop':shop,'pathlist':pathlist})
 
 def cart(request):
     name = gettoken(request)
     return render(request,'cart.html',{'name':name})
+
+
+def shoplist(request):
+    name = gettoken(request)
+    shoplists = Shoplist.objects.all()
+
+    return render(request,'shoplist.html',context={'name':name,'sholists':shoplists})

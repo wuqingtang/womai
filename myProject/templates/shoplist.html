@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>商品列表</title>
+        <script src="{% static 'js/jquery-1.12.3.js' %}" type="text/javascript" charset="utf-8"></script>
+		<script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
+		<script src="{% static 'js/shoplist.js' %}" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/detail-css/detail.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/shoplist-css/shoplist.css' %}"/>
+	</head>
+	<body>
+
+        {% if name %}
+            <div class="top_nav_wrap">
+                <div class="top_nav width clearfix">
+                    <ul class="nav-l float">
+                        <li class="float"><p><span>当前城市：</span><span id="city">北京</span><i class="arrow_down"></i></p></li>
+                    </ul>
+
+
+                    <ul class="nav-m fl">
+                        <li class="float">欢迎您,{{ name }}!</li>
+
+                        <li class="float"><a class="log" style="color:#8cb91e" href="{% url 'wm:logout' %}">退出</a></li>
+                    </ul>
+
+
+
+                    <ul class="nav-r" style="margin-right: 10px;">
+                        <li class="fl own"><p><a href="#"><span class="text">我的账户<i></i></span></a></p>
+                            <div class="mycount">
+                                <p><span>{{ name }}</span><a style="color:#8cb91e" href="#" class="log">已登录</a></p>
+                                <ul>
+                                    <li><a href="#">待付款订单</a></li>
+                                    <li><a href="#">我的消息</a></li>
+                                    <li><a href="#">待签收订单</a></li>
+                                    <li><a href="#">我的订单</a></li>
+                                    <li><a href="#">支付卡账户</a></li>
+                                    <li><a href="#">我的积分</a></li>
+                                    <li><a href="#">优惠券/团购卡</a></li>
+                                    <li><a href="#">我的收藏</a></li>
+                                    <li><a href="#">电子礼品卡</a></li>
+                                    <li><a href="#">兑 换 券</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="cart fl"><p><a href="#"><span class="text">购物车<b>0</b>件</span></a></p></li>
+                        <li class="line fl">|</li>
+                        <li class="own fl"><p><a href="#"><span class="text">客户服务<i></i></span></a></p>
+                            <div class="mycount consumer">
+                                <ul>
+                                    <li><a href="#">帮助中心</a></li>
+                                    <li><a href="#">新手上路</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="line fl">|</li>
+                        <li class="fl"><p><a href="#"><span class="text">大客户</span></a></p></li>
+                        <li class="line fl">|</li>
+                        <li class="fr"><a href="#"><span class="icbc"></span></a><a href="#"><span class="zhxin"></span></a></li>
+                    </ul>
+                </div>
+		    </div>
+        {% else %}
+            <div class="top_nav_wrap">
+                <div class="top_nav width clearfix">
+                    <ul class="nav-l float">
+                        <li class="float"><p><span>当前城市：</span><span id="city">北京</span><i class="arrow_down"></i></p></li>
+                    </ul>
+                    <ul class="nav-m fl">
+                        <li class="float">欢迎您!</li>
+                        <li class="float"><a class="log" style="color:#8cb91e" href="{% url 'wm:login' %}">登录</a></li>
+                        <li class="float"><a class="reg" href="{% url 'wm:register' %}">注册</a></li>
+                    </ul>
+                    <ul class="nav-r" style="margin-right: 10px;">
+                        <li class="fl own"><p><a href="#"><span class="text">我的账户<i></i></span></a></p>
+                            <div class="mycount">
+                                <p><span>您还没有登录</span><a style="color:#8cb91e" href="{% url 'wm:login' %}" class="log">登录</a></p>
+                                <ul>
+                                    <li><a href="#">待付款订单</a></li>
+                                    <li><a href="#">我的消息</a></li>
+                                    <li><a href="#">待签收订单</a></li>
+                                    <li><a href="#">我的订单</a></li>
+                                    <li><a href="#">支付卡账户</a></li>
+                                    <li><a href="#">我的积分</a></li>
+                                    <li><a href="#">优惠券/团购卡</a></li>
+                                    <li><a href="#">我的收藏</a></li>
+                                    <li><a href="#">电子礼品卡</a></li>
+                                    <li><a href="#">兑 换 券</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="cart fl"><p><a href="#"><span class="text">购物车<b>0</b>件</span></a></p></li>
+                        <li class="line fl">|</li>
+                        <li class="own fl"><p><a href="#"><span class="text">客户服务<i></i></span></a></p>
+                            <div class="mycount consumer">
+                                <ul>
+                                    <li><a href="#">帮助中心</a></li>
+                                    <li><a href="#">新手上路</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="line fl">|</li>
+                        <li class="fl"><p><a href="#"><span class="text">大客户</span></a></p></li>
+                        <li class="line fl">|</li>
+                        <li class="fr"><a href="#"><span class="icbc"></span></a><a href="#"><span class="zhxin"></span></a></li>
+                    </ul>
+                </div>
+		    </div>
+        {% endif %}
+    
+        <div class="shoplist">
+            {% for sholist in sholists %}
+                <a href="{% url 'wm:detail' %}"><img src="{% static sholist.headImg %}" alt="" width="24%"></a>
+            {% endfor %}
+            
+        </div>
+
+
+
+	</body>
+</html>

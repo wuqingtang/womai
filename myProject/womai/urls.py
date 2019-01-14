@@ -13,7 +13,11 @@ urlpatterns = [
     #登录
     url(r'^login/$',views.login,name='login'),
 
-    #商品详情
+
+    #商品列表
+    url(r'shoplist/$',views.shoplist,name='shoplist'),
+
+    #商品列表
     url(r'^detail/$',views.detail,name='detail'),
 
     #购物车

@@ -235,7 +235,8 @@
 				<div class="born-wrap">
 					<div class="born">
 						<span class="zoom-out">
-							<img src="{% static 'img/detailimg/header-01.jpg' %}">
+{#							<img src="{% static 'img/detailimg/header-01.jpg' %}">#}
+                            <img src="{% static shop.headImg %}">
 							<div class="zoom-up">
 
 							</div>
@@ -259,14 +260,14 @@
 			</div>
 			<div class="detail-t-r">
 				<div class="tit">
-					<p>【自营】(资生堂3件组) 水之密语净澄水活洗发露(倍润型)600ml+护发素600ml+可悠然幽香浴露550ml</p>
+					<p>{{ shop.name }}</p>
 				</div>
 				<div class="t-middle clearfix">
 					<div class="m-tit">
 						抢购价：
 					</div>
 					<div class="price">
-						￥<span>139.00</span>
+						{{ shop.unit }}<span>{{ shop.price }}</span>
 					</div>
 				</div>
 				<div class="region clearfix">
@@ -366,27 +367,38 @@
 						<div class="count-wrap">
 							<div class="count">
 								<ul class="clearfix">
-									<li>
-										<div class="gift">
-											<a href="#"><img src="{% static 'img/detailimg/top-01.jpg' %}"></a>
-										</div>
-										<h2><a href="#">【自营】资生堂水之密语净澄水活洗发露(倍润型)600ml/</a></h2>
-										<span>×1</span>
-									</li>
-									<li>
-										<div class="gift">
-											<a href="#"><img src="{% static 'img/detailimg/top-02.jpg' %}"></a>
-										</div>
-										<h2><a href="#">【自营】可悠然欣怡幽香美肌沐浴550m(瓶装)/</a></h2>
-										<span>×1</span>
-									</li>
-									<li>
-										<div class="gift">
-											<a href="#"><img src="{% static 'img/detailimg/top-03.jpg' %}"></a>
-										</div>
-										<h2><a href="#">【自营】资生堂水之密语净澄水活护发素600ml/</a></h2>
-										<span>×1</span>
-									</li>
+                                    {% for path in pathlist %}
+                                        <li>
+                                            <div class="gift">
+                                                <a href="#"><img src="{% static path %}"></a>
+                                            </div>
+                                            <h2><a href="#">{{ shop.name }}</a></h2>
+                                            <span>×1</span>
+									    </li>
+                                    {% endfor %}
+
+
+{#									<li>#}
+{#										<div class="gift">#}
+{#											<a href="#"><img src="{% static 'img/detailimg/top-01.jpg' %}"></a>#}
+{#										</div>#}
+{#										<h2><a href="#">{{ shop.name }}</a></h2>#}
+{#										<span>×1</span>#}
+{#									</li>#}
+{#									<li>#}
+{#										<div class="gift">#}
+{#											<a href="#"><img src="{% static 'img/detailimg/top-02.jpg' %}"></a>#}
+{#										</div>#}
+{#										<h2><a href="#">{{ shop.name }}</a></h2>#}
+{#										<span>×1</span>#}
+{#									</li>#}
+{#									<li>#}
+{#										<div class="gift">#}
+{#											<a href="#"><img src="{% static 'img/detailimg/top-03.jpg' %}"></a>#}
+{#										</div>#}
+{#										<h2><a href="#">{{ shop.name }}</a></h2>#}
+{#										<span>×1</span>#}
+{#									</li>#}
 								</ul>
 							</div>
 						</div>
@@ -458,8 +470,8 @@
 				</div>
 				<div class="rightborder">
 					<div class="right-count">
-						<h2>【自营】(资生堂3件组) 水之密语净澄水活洗发露(倍润型)600ml+护发素600ml+可悠然幽香浴露550ml</h2>
-						<img src="{% static 'img/detailimg/bgimg.jpg' %}">
+						<h2>{{ shop.name }}</h2>
+						<img src="{% static shop.headImg %}">
 					</div>
 					<div class="botmsg">
 						<p>您还可以来<a href="#">[我买团]</a>买优惠的商品，来<a href="#">[我买酒]</a>享受酒文化，来<a href="#">[美食天下]</a>阅读美食资讯与菜谱</p>
