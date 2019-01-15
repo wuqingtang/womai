@@ -1554,7 +1554,7 @@ model</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="356" parent="254" name="emph">
+    <column id="356" parent="254" name="email">
       <Position>4</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
@@ -1562,7 +1562,7 @@ model</ColNames>
     </column>
     <column id="357" parent="254" name="phonenum">
       <Position>5</Position>
-      <DataType>int(10) unsigned|0</DataType>
+      <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -1572,10 +1572,18 @@ model</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="359" parent="254" name="PRIMARY">
+    <index id="359" parent="254" name="womai_user_phonenum_b36566f5_uniq">
+      <ColNames>phonenum</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="360" parent="254" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
+    </key>
+    <key id="361" parent="254" name="womai_user_phonenum_b36566f5_uniq">
+      <ColNames>phonenum</ColNames>
+      <UnderlyingIndexName>womai_user_phonenum_b36566f5_uniq</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

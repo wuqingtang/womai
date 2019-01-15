@@ -135,7 +135,7 @@ a:hover{
 	text-align: center;
 	padding-top: 10px;
 }
-.main .login-btn input{
+.main .login-btn span{
 	background: url(../../img/registerimg/login.png) no-repeat 0 -5px;
 	width:209px;
 	height: 30px;
@@ -267,3 +267,44 @@ a:hover{
 	background: #8cb91e;
 	width:100%;
 }
+
+.correct{
+	color: green;
+	font-size: 18px;
+}
+.error{
+	color: red;
+	font-size: 18px;
+}
+
+.refer-btn div{
+	width: 209px;
+	height: 30px;
+	float: left;
+	color: #fff;
+	background: url(../../img/registerimg/login.png) 0px -5px no-repeat;
+	border: none;
+	cursor: pointer;
+	line-height: 30px;
+	font-family: "Microsoft YaHei";
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+}
+
+.refer-btn a{
+	border: none;
+	cursor: pointer;
+	line-height: 30px;
+	font-family: "Microsoft YaHei";
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+}
+
+#error_p{
+	margin: 10px;
+	color: red;
+	font-size: 20px;
+}
+

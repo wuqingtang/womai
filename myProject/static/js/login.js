@@ -1,62 +1,51 @@
-$(function(){
-	$(":text").val(null);
-	var user = $.cookie("user");
-	var pwd = $.cookie("pwd");
-	$("input").eq(0).val(user);
-	$("input").eq(1).val(pwd);
-	
-	
-	$(".msg").show();
-	$("input").click(function(){
-		$(this).parent().find(".msg").hide();
-		
-	})
-	$("input").blur(function(){
-		if(!$(this).val()){
-			$(this).parent().find(".msg").show();
-		}		
-	})
-	$(".msg").click(function(){
-		$(this).hide();	
-		$(this).parent().find("input").focus();		
-	})
-	isEmpty();
-	function isEmpty(){
-		$("input").each(function(){
-			if($(this).val()){
-				$(this).parent().find(".msg").hide();
-			}
-			else{
-				$(this).parent().find(".msg").show();
-			}
-		})
-	}
-	$(".login-btn a").click(function(){
-		location.href = "../html/register.html";	
-		
-	})
-	$(".header-logo").click(function(){
-		location.href = "../index.html";
-	})
-	$("input").eq(2).click(function(){
-        var xhr = new XMLHttpRequest();
-        xhr.open("post", "../PHP/login.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        var str = "username="+ $("input").eq(0).val() + "&pwd=" + $("input").eq(1).val();
-        xhr.send(str);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState==4 && xhr.status==200) {
-                console.log(xhr.responseText);
-                var obj = JSON.parse(xhr.responseText);
-                console.log(obj);
-                if(obj.status == 1){
-                	alert("登录成功！");
-					location.href = "../index.html";
-                }
-                else{
-                	alert(obj.msg);
-                }
-            }
+
+window.onload = function () {
+    //验证手机号
+    $(".long-input input[name='phonenum']").blur(function () {
+        var phonenum = $(this).val();
+
+        var reg = /^1[3-9]\d{9}$/;
+
+        var resulut = reg.test(phonenum);
+        if(resulut){
+            $('#phonenum').html('手机号输入正确').removeClass('error').addClass('correct');
+
+        }else {
+            $('#phonenum').html('手机号输入错误').removeClass('correct').addClass('error');
+
         }
-	})	
-})
+    });
+
+
+    //验证密码
+    $(".long-input input[name='password']").blur(function () {
+        var password = $(this).val();
+        var reg = /^\w{6,20}$/;
+        var resulut = reg.test(password);
+        if(resulut){
+            $('#password').html('密码输入正确').removeClass('error').addClass('correct');
+
+        }else {
+            $('#password').html('密码输入有误').removeClass('correct').addClass('error');
+        }
+    });
+
+
+    $('#btn').click(function () {
+
+        console.log(10);
+        var islogin = true;
+        $('.sp').each(function () {
+            if(!$(this).hasClass('correct')){
+                islogin = false
+            }
+        });
+
+        if(islogin){
+            $('#login').submit()
+        }
+    })
+
+};
+
+

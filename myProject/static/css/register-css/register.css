@@ -162,7 +162,7 @@ a:hover{
 	padding-top: 10px;
 	position: relative;
 }
-.refer-btn input{
+.refer-btn div{
 	width: 209px;
 	height: 30px;
 	float: left;
@@ -221,4 +221,13 @@ a:hover{
 	height: 28px;
 	background: #8cb91e;
 	width:100%;
+}
+
+.correct{
+	color: green;
+	font-size: 18px;
+}
+.error{
+	color: red;
+	font-size: 18px;
 }

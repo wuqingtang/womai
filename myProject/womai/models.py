@@ -2,9 +2,9 @@ from django.db import models
 
 class User(models.Model):
     name = models.CharField(max_length=30)
+    phonenum = models.CharField(max_length=255,unique=True)
     pwd = models.CharField(max_length=255)
-    emph = models.CharField(max_length=50)
-    phonenum = models.PositiveIntegerField()
+    email = models.CharField(max_length=50)
     token = models.CharField(max_length=255)
 
     def __str__(self):

@@ -13,6 +13,8 @@ urlpatterns = [
     #登录
     url(r'^login/$',views.login,name='login'),
 
+    #ajax局部检测账号是否存在,就是手机号
+    url(r'^check/$',views.check,name='check'),
 
     #商品列表
     url(r'shoplist/$',views.shoplist,name='shoplist'),

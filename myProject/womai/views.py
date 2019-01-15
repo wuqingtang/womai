@@ -1,7 +1,7 @@
 import hashlib
 import random
 import time
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from womai.models import *
 
@@ -160,9 +160,9 @@ def register(request):
         # 获取post请求的数据，并且加入到数据库中
         user = User()
         user.name = request.POST.get('username')
-        user.pwd = generate_pwd(request.POST.get('password1'))
-        user.emph = request.POST.get('emph')
-        user.phonenum = request.POST.get('phonenumber')
+        user.pwd = generate_pwd(request.POST.get('password'))
+        user.email = request.POST.get('email')
+        user.phonenum = request.POST.get('phonenum')
         user.token = generate_token()
         user.save()
 
@@ -186,18 +186,21 @@ def login(request):
     if request.method == 'GET':
         return render(request,'Login.html')
     elif request.method == 'POST':
-        name = request.POST.get('username')
+        phonenum = request.POST.get('phonenum')
         pwd = generate_pwd(request.POST.get('password'))
-        users = User.objects.filter(name=name).filter(pwd=pwd)
-        if users.count():
-            #重新通过session，设置token,token需要重新生成
-            user= users.first()
-            user.token = generate_token()
-            user.save()
-            request.session['token'] = user.token
-            return redirect('wm:index')
-        else:
-            return HttpResponse('用户名或者密码不正确')
+
+        try:
+            user = User.objects.get(phonenum=phonenum)
+            if user.pwd == pwd:
+                user.token = generate_token()
+                user.save()
+                request.session['token'] = user.token
+                return redirect('wm:index')
+            else:
+                return render(request,'Login.html',{'error':'密码不对'})
+        except:
+            return render(request,'Login.html',{'error':'账号不存在'})
+
 
 def detail(request):
     name = gettoken(request)
@@ -228,3 +231,16 @@ def shoplist(request):
     shoplists = Shoplist.objects.all()
 
     return render(request,'shoplist.html',context={'name':name,'sholists':shoplists})
+
+
+#ajax 拒不请求,请求代码在register.js文件中
+def check(request):
+    phonenum = request.GET.get('phone')
+
+    users = User.objects.filter(phonenum=phonenum)
+
+    if users.exists():
+        return JsonResponse({'msg':'账号已存在','status':0})
+    else:
+        return JsonResponse({'msg':'账号可以使用','status':1})
+
