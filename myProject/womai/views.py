@@ -204,36 +204,42 @@ def login(request):
 
 def detail(request):
     name = gettoken(request)
-
     #在商品列表点击图片后,获取对应的cookie
     index = request.COOKIES.get('index')
+    shop = Shoplist.objects.get(id=int(index) + 1)
+    shopzoom = shop.zoom
+    pathlist = shopzoom.split(',')
 
-    if index:
+    shopsmall = shop.small
+    shopsmallpath = shopsmall.split(',')
 
-        shop = Shoplist.objects.get(id=int(index) + 1)
-        pathstr = shop.zoom
-        pathlist = pathstr.split(',')
-
-    else:
-        shop = None
-
-
-
-    return render(request,'detail.html',{'name':name,'shop':shop,'pathlist':pathlist})
+    data = {
+        'name':name,
+        'shop':shop,
+        'pathlist':pathlist,
+        'shopsmallpath':shopsmallpath,
+    }
+    return render(request,'detail.html',data)
 
 def cart(request):
     name = gettoken(request)
-    return render(request,'cart.html',{'name':name})
+    #通过token获取用户,通过用户获取到Cart对象
+    token = request.session.get('token')
+
+    user = User.objects.get(token=token)
+
+    carts = Cart.objects.filter(user=user).exclude(number=0)
+    return render(request,'cart.html',{'name':name,'carts':carts})
 
 
 def shoplist(request):
     name = gettoken(request)
     shoplists = Shoplist.objects.all()
 
-    return render(request,'shoplist.html',context={'name':name,'sholists':shoplists})
+    return render(request,'shoplist.html',context={'name':name,'shoplists':shoplists})
 
 
-#ajax 拒不请求,请求代码在register.js文件中
+#ajax 局部请求,请求代码在register.js文件中
 def check(request):
     phonenum = request.GET.get('phone')
 
@@ -243,4 +249,103 @@ def check(request):
         return JsonResponse({'msg':'账号已存在','status':0})
     else:
         return JsonResponse({'msg':'账号可以使用','status':1})
+
+
+#ajax,局部请求,请求代码在detail.js文件中
+def addcart(request):
+    token = request.session.get('token')
+    if token:
+        #获取商品id
+        shopid = int(request.GET.get('shopid'))
+        #获取商品数量
+        number = int(request.GET.get('number'))
+
+
+        #尽管在js文件中已经转成int形式了,但是通过请求得到的数据是str类型的,需要进行转换
+        # shopid = request.GET.get('shopid')
+        # number = request.GET.get('number')
+        # print(type(shopid))
+        # print(type(shopid))
+
+
+        #获取用户以及商品对象
+        user = User.objects.get(token=token)
+        goods = Shoplist.objects.get(pk=shopid)
+
+
+        #添加购物车
+        #需要做一次判断,购物车中是否有该商品,如果有,直接加数量,如果没有,则增加一条记录
+        carts = Cart.objects.filter(user=user).filter(goods=goods)
+
+        if carts.exists():  #购物车中有该商品
+            cart = carts.first()
+            print(type(cart.number))
+            print(type(number))
+            cart.number += number
+            cart.save()
+            return JsonResponse({'msg':'增加成功','status':1})
+        else:       #购物车中没有该商品
+            cart = Cart()
+            cart.user = user
+            cart.goods = goods
+            cart.number = number
+            cart.save()
+        return JsonResponse({'msg':'添加成功','status':1})
+    else:
+        #重定向出有问题,出现了login.html的代码,原因是ajax请求用于数据,而不能做出重定向,我们可以去客户端进行重定向
+        return JsonResponse({'msg':'添加失败','status':0})
+
+
+def addgoodsnumber(request):
+    goodid = int(request.GET.get('goodid'))
+    goods = Shoplist.objects.get(pk=goodid)
+
+    token = request.session.get('token')
+    user = User.objects.get(token=token)
+
+    carts = Cart.objects.filter(user=user).filter(goods=goods)
+    cart = carts.first()
+
+    cart.number += 1
+    cart.save()
+
+    number = cart.number
+
+    return JsonResponse({'msg':'增加成功','status':1,'number':number})
+
+
+def cutgoodsnumber(request):
+    goodid = int(request.GET.get('goodid'))
+    goods = Shoplist.objects.get(pk=goodid)
+
+    token = request.session.get('token')
+    user = User.objects.get(token=token)
+
+    carts = Cart.objects.filter(user=user).filter(goods=goods)
+    cart = carts.first()
+
+    cart.number -= 1
+    cart.save()
+
+    number = cart.number
+
+    return JsonResponse({'msg': '减少成功', 'status': 1, 'number': number})
+
+
+def delgoodsnumber(request):
+    goodid = int(request.GET.get('goodid'))
+    goods = Shoplist.objects.get(pk=goodid)
+
+    token = request.session.get('token')
+    user = User.objects.get(token=token)
+
+    carts = Cart.objects.filter(user=user).filter(goods=goods)
+    cart = carts.first()
+
+    cart.number = 0
+    cart.save()
+
+    number = cart.number
+
+    return JsonResponse({'msg': '减少成功', 'status': 1, 'number': number})
 

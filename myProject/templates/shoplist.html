@@ -113,8 +113,8 @@
         {% endif %}
     
         <div class="shoplist">
-            {% for sholist in sholists %}
-                <a href="{% url 'wm:detail' %}"><img src="{% static sholist.headImg %}" alt="" width="24%"></a>
+            {% for shoplist in shoplists %}
+                <a href="{% url 'wm:detail' %}"><img src="{% static shoplist.headImg %}" alt="" width="24%"></a>
             {% endfor %}
             
         </div>

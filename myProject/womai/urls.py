@@ -23,6 +23,19 @@ urlpatterns = [
     url(r'^detail/$',views.detail,name='detail'),
 
     #购物车
-    url(r'^cart/&',views.cart,name='cart'),
+    url(r'^cart/$',views.cart,name='cart'),
+
+    #添加商品,ajax路由
+    url(r'addcart/$',views.addcart,name='addcart'),
+
+    #在购物车中增加商品数量
+    url(r'addgoodsnumber/$',views.addgoodsnumber,name='addgoodsnumber'),
+    #在购物车中增加商品数量
+    url(r'cutgoodsnumber/$',views.cutgoodsnumber,name='cutgoodsnumber'),
+    #在购物车中删除商品
+    url(r'delgoodsnumber/$',views.delgoodsnumber,name='delgoodsnumber'),
+
+
+
 
 ]

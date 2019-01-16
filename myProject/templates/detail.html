@@ -156,7 +156,7 @@
 						<li class="kinds"><h3><b style="background: url({% static 'img/indeximg/list03.png' %});"></b><a class="kind" href="#">进口食品</a><a class="kind" href="#">进口直采</a></h3>
 
 						</li>
-						<li class="kinds"><h3><b style="background: url({% static 'img/indeximg/list04.png' %};"></b><a class="kind" href="#">酒</a><a class="kind" href="#">饮料/冲调</a><a class="kind" href="#">茶</a></h3>
+						<li class="kinds"><h3><b style="background: url({% static 'img/indeximg/list04.png' %});"></b><a class="kind" href="#">酒</a><a class="kind" href="#">饮料/冲调</a><a class="kind" href="#">茶</a></h3>
 
 						</li>
 						<li class="kinds"><h3><b style="background: url({% static 'img/indeximg/list05.png' %});"></b><a class="kind" href="#">休闲零食</a><a class="kind" href="#">地方特产</a></h3>
@@ -236,7 +236,10 @@
 					<div class="born">
 						<span class="zoom-out">
 {#							<img src="{% static 'img/detailimg/header-01.jpg' %}">#}
+
                             <img src="{% static shop.headImg %}">
+
+
 							<div class="zoom-up">
 
 							</div>
@@ -306,7 +309,7 @@
 							</div>
 							<div class="number">
 								<div class="num-ipt">
-									<input class="num" type="text" name="" id="" value="1">
+									<input class="num" type="text" name="num" id="" value="1">
 									<span class="add">
 										+
 									</span>
@@ -316,7 +319,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="buy-btn fl">
+						<div class="buy-btn fl" shopid={{ shop.id }}>
 							<b class="png"></b>
 							加入购物车
 						</div>

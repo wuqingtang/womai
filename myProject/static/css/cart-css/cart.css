@@ -226,6 +226,7 @@ a:hover{
 .feeter{
 	margin-top: 30px;
 	margin-bottom: 50px;
+	clear: left;
 }
 .feeter .beian{
 	display: inline-block;
@@ -581,3 +582,70 @@ label{
 .full-cart{
 	display: none;
 }
+
+/*.goods h3{*/
+	/*text-align: center;*/
+	/*font-size: 30px;*/
+	/*color: red;*/
+/*}*/
+
+
+.goods img{
+	width: 100px;
+	height: 100px;
+	float: left;
+	margin: 20px;
+	clear: left;
+}
+.goods>div{
+	float: left;
+	margin-top: 25px;
+	font-size: 20px;
+}
+
+#bottom{
+	display: inline-block;
+	margin-top: 20px;
+}
+
+
+
+#add{
+	background-color: yellow;
+	display: inline-block;
+	margin-top: 20px;
+	width: 80px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+
+
+}
+
+#cut{
+	background-color: lawngreen;
+	display: inline-block;
+	margin-top: 20px;
+	margin-left: 20px;
+	width: 80px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+
+}
+
+#del{
+	background-color: red;
+	display: inline-block;
+	margin-top: 20px;
+	margin-left: 20px;
+	width: 80px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+
+}
+
+
+
+
