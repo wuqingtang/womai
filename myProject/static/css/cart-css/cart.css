@@ -583,11 +583,11 @@ label{
 	display: none;
 }
 
-/*.goods h3{*/
-	/*text-align: center;*/
-	/*font-size: 30px;*/
-	/*color: red;*/
-/*}*/
+#carth{
+	text-align: center;
+	font-size: 30px;
+	color: red;
+}
 
 
 .goods img{
@@ -603,14 +603,18 @@ label{
 	font-size: 20px;
 }
 
-#bottom{
+.bottom{
 	display: inline-block;
 	margin-top: 20px;
 }
 
+.goods font{
+	margin-left: 50px;
+}
 
 
-#add{
+
+.add{
 	background-color: yellow;
 	display: inline-block;
 	margin-top: 20px;
@@ -622,7 +626,7 @@ label{
 
 }
 
-#cut{
+.cut{
 	background-color: lawngreen;
 	display: inline-block;
 	margin-top: 20px;
@@ -634,7 +638,7 @@ label{
 
 }
 
-#del{
+.del{
 	background-color: red;
 	display: inline-block;
 	margin-top: 20px;
@@ -645,6 +649,69 @@ label{
 	line-height: 20px;
 
 }
+
+.isselect{
+
+	display: inline-block;
+	margin-top: 20px;
+	margin-left: 20px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	border-radius: 50%;
+	border:black 1px solid;
+
+}
+.ok{
+	width: 10px;
+	height: 10px;
+	text-align: center;
+	line-height: 10px;
+	border-radius: 50%;
+	background-color: cyan;
+	position: relative;
+	left: 5px;
+	top: 5px;
+}
+
+
+.order{
+	clear: left;
+	margin-left: 43%;
+	margin-top: 35%;
+	font-size: 20px;
+}
+
+.order span{
+	display: inline-block;
+	width: 80px;
+	height: 20px;
+	text-align: center;
+	background-color: yellow;
+
+}
+
+.order font{
+	margin-left: 40px;
+	width: 80px;
+	height: 20px;
+	text-align: center;
+
+}
+
+.order .success{
+	margin-left: 60px;
+}
+
+.order i{
+	font-size: 20px;
+}
+
+
+
+
+
 
 
 

@@ -175,45 +175,109 @@
 // 	})
 // })
 window.onload = function () {
-    $('#add').click(function () {
-        //获取到商品id
-        var goodid = parseInt($('#bottom').attr('goodid'));
+    $('.add').click(function () {
 
+
+        var goodid = parseInt($(this).prev().find('span').attr('goodid'));
+
+        var $that = $(this).prev().find('span');
         data = {
             'goodid': goodid
         };
         $.get('/addgoodsnumber/', data, function (response) {
-            $('#bottom').html(response.number)
-        })
+            $that.html(response.number)
+
+        });
+
+        accounts()
 
     });
 
-    $('#cut').click(function () {
-
-        if(parseInt($('#bottom').html())>1){
-            var goodid = parseInt($('#bottom').attr('goodid'));
+    $('.cut').click(function () {
+        var $that = $(this).prev().prev().find('span');
+        if (parseInt($that.html()) > 1) {
+            var goodid = parseInt($that.attr('goodid'));
             data = {
                 'goodid': goodid
             };
             $.get('/cutgoodsnumber/', data, function (response) {
-                $('#bottom').html(response.number)
+                $that.html(response.number)
             })
-        }else {
+        } else {
             alert('数量已经是最少值了,若不需要,请点击删除')
         }
+
+        accounts()
     });
 
-    $('#del').click(function () {
+    $('.del').click(function () {
         //获取到商品id
-        var goodid = parseInt($('#bottom').attr('goodid'));
+
+        var $that = $(this).prev().prev().prev().find('span');
+        var goodid = parseInt($that.attr('goodid'));
 
         data = {
             'goodid': goodid
         };
         $.get('/delgoodsnumber/', data, function (response) {
-            window.open('/cart/',target='_self')
+            window.open('/cart/', target = '_self')
         })
+
+        accounts()
 
     });
 
+    $('.isselect').click(function () {
+        $(this).find('div').hasClass('ok')?$(this).find('div').removeClass('ok'):$(this).find('div').addClass('ok')
+
+        accounts()
+    })
+
+
+
+
+
+    $('.order .allselect').click(function () {
+
+        var resulut = true;
+        $('.goods .isselect').find('div').each(function () {
+            if(!$(this).hasClass('ok')){
+            resulut = false
+            }
+        })
+
+        if(resulut){
+            $('.goods .isselect').find('div').removeClass('ok')
+        }else{
+            $('.goods .isselect').find('div').addClass('ok')
+        }
+
+        accounts()
+
+    })
+
+
+    function accounts() {
+        var sum = 0;
+
+        $('.goods').each(function () {
+            var result = $(this).find('.goodsbox').hasClass('ok');
+            console.log(result)
+            if(result){
+                var num = parseInt($(this).find('.bottom').html());
+
+                var pri = parseInt($(this).find('.goodprice').html());
+
+                sum += num * pri
+            }
+        });
+
+        $('.order i').html(sum + '元')
+    }
+
+
 };
+
+
+
+

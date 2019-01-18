@@ -147,7 +147,14 @@ def gettoken(request):
 
 #首页
 def index(request):
-    name = gettoken(request)
+    token = request.session.get('token')
+    # 通过获取的token，获取对象
+    users = User.objects.filter(token=token)
+    if users.count():
+        user = users.first()
+        name = user.name
+    else:
+        name = None
 
     imgs = Banner.objects.all()
 
@@ -203,9 +210,18 @@ def login(request):
 
 
 def detail(request):
-    name = gettoken(request)
+    token = request.session.get('token')
+    # 通过获取的token，获取对象
+    users = User.objects.filter(token=token)
+    if users.count():
+        user = users.first()
+        name = user.name
+    else:
+        name = None
     #在商品列表点击图片后,获取对应的cookie
     index = request.COOKIES.get('index')
+
+
     shop = Shoplist.objects.get(id=int(index) + 1)
     shopzoom = shop.zoom
     pathlist = shopzoom.split(',')
@@ -222,10 +238,15 @@ def detail(request):
     return render(request,'detail.html',data)
 
 def cart(request):
-    name = gettoken(request)
-    #通过token获取用户,通过用户获取到Cart对象
     token = request.session.get('token')
-
+    # 通过获取的token，获取对象
+    users = User.objects.filter(token=token)
+    if users.count():
+        user = users.first()
+        name = user.name
+    else:
+        name = None
+    #通过token获取用户,通过用户获取到Cart对象
     user = User.objects.get(token=token)
 
     carts = Cart.objects.filter(user=user).exclude(number=0)
@@ -233,7 +254,14 @@ def cart(request):
 
 
 def shoplist(request):
-    name = gettoken(request)
+    token = request.session.get('token')
+    # 通过获取的token，获取对象
+    users = User.objects.filter(token=token)
+    if users.count():
+        user = users.first()
+        name = user.name
+    else:
+        name = None
     shoplists = Shoplist.objects.all()
 
     return render(request,'shoplist.html',context={'name':name,'shoplists':shoplists})
@@ -242,9 +270,7 @@ def shoplist(request):
 #ajax 局部请求,请求代码在register.js文件中
 def check(request):
     phonenum = request.GET.get('phone')
-
     users = User.objects.filter(phonenum=phonenum)
-
     if users.exists():
         return JsonResponse({'msg':'账号已存在','status':0})
     else:
