@@ -59,6 +59,40 @@ class Cart(models.Model):
         return str(self.number)
 
 
+#订单表,一个用户有多个订单
+class Order(models.Model):
+
+    user = models.ForeignKey(User)
+
+    #订单的状态 未付款,付款,等等
+    status = models.IntegerField(default=0)
+
+    #订单创建时间,自动生成
+    createtime = models.DateTimeField(auto_now_add=True)
+
+    #订单编号
+    identifier = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.identifier
+
+
+#订单商品表
+#一个订单 有多个商品
+class OrderGoods(models.Model):
+    # 订单
+    order = models.ForeignKey(Order)
+    # 商品
+    goods = models.ForeignKey(Shoplist)
+    # 商品规格
+    number = models.IntegerField()
+
+    def __str__(self):
+        return str(self.number)
+
+
+
+
 
 
 

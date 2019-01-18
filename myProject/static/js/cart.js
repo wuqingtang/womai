@@ -188,7 +188,7 @@ window.onload = function () {
             $that.html(response.number)
 
         });
-
+        //触发事件,改变状态,调用函数计算价格
         accounts()
 
     });
@@ -206,7 +206,7 @@ window.onload = function () {
         } else {
             alert('数量已经是最少值了,若不需要,请点击删除')
         }
-
+        //触发事件,改变状态,调用函数计算价格
         accounts()
     });
 
@@ -221,17 +221,26 @@ window.onload = function () {
         };
         $.get('/delgoodsnumber/', data, function (response) {
             window.open('/cart/', target = '_self')
-        })
-
+        });
+        //触发事件,改变状态,调用函数计算价格
         accounts()
 
     });
 
     $('.isselect').click(function () {
-        $(this).find('div').hasClass('ok')?$(this).find('div').removeClass('ok'):$(this).find('div').addClass('ok')
+        $(this).find('.goodsbox').hasClass('ok') ? $(this).find('div').removeClass('ok'):$(this).find('div').addClass('ok');
+        //同时发起ajax请求,改变数据库中购物车的状态
+        var cartid = $(this).attr('cartid');
 
+        data = {
+            'cartid':cartid
+        };
+        $.get('/changestatus/',data,function (response) {
+            console.log(response)
+        });
+        //触发事件,改变状态,调用函数计算价格
         accounts()
-    })
+    });
 
 
 
@@ -244,7 +253,7 @@ window.onload = function () {
             if(!$(this).hasClass('ok')){
             resulut = false
             }
-        })
+        });
 
         if(resulut){
             $('.goods .isselect').find('div').removeClass('ok')
@@ -252,17 +261,24 @@ window.onload = function () {
             $('.goods .isselect').find('div').addClass('ok')
         }
 
+        //并且发起一个ajax请求,改变该用户,所有购物车记录的状态
+        $.get('/changeallstatus/',function (response) {
+            console.log(response)
+        })
+
+        //触发事件,改变状态,调用函数计算价格
         accounts()
 
-    })
+    });
 
 
+    //计算总价的函数
     function accounts() {
         var sum = 0;
 
         $('.goods').each(function () {
             var result = $(this).find('.goodsbox').hasClass('ok');
-            console.log(result)
+
             if(result){
                 var num = parseInt($(this).find('.bottom').html());
 
@@ -274,6 +290,18 @@ window.onload = function () {
 
         $('.order i').html(sum + '元')
     }
+
+
+    $('.order .success').click(function () {
+        //发起ajax请求
+       $.get('/order/',function (response) {
+
+           if(response.status){
+               window.open('/orderdetail/' + response.identifier + '/',target='_self')
+           }
+       })
+
+    });
 
 
 };

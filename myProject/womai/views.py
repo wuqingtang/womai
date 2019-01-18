@@ -375,3 +375,59 @@ def delgoodsnumber(request):
 
     return JsonResponse({'msg': '减少成功', 'status': 1, 'number': number})
 
+def changestatus(request):
+    cartid = int(request.GET.get('cartid'))
+    cart = Cart.objects.get(pk=cartid)
+    cart.isselect = not cart.isselect
+    cart.save()
+    return JsonResponse({'msg':'请求成功'})
+
+def changeallstatus(request):
+    token = request.session.get('token')
+    user = User.objects.get(token=token)
+    carts = Cart.objects.filter(user=user)
+    for cart in carts:
+        cart.isselect = not cart.isselect
+        cart.save()
+    return JsonResponse({'msg':'请求成功'})
+
+
+def generate_identifire():
+    tempstr = str(int(time.time())) + str(random.random())
+    return tempstr
+
+
+
+def order(request):
+    token = request.session.get('token')
+    user = User.objects.get(token=token)
+
+    #创建订单对象
+    order = Order()
+    order.user = user
+    order.identifier = generate_identifire()
+    order.save()
+
+
+    carts = Cart.objects.filter(user=user).filter(isselect=True).exclude(number=0)
+    #遍历购物车对象,创建多个商品订单对象
+    for cart in carts:
+        orderGoods = OrderGoods()
+        orderGoods.order = order
+        orderGoods.goods = cart.goods
+        orderGoods.number = cart.number
+        orderGoods.save()
+
+        #创建一个商品订单对象,就将一个购物车对象的数量改成0
+        cart.number = 0
+
+    data = {
+        'msg':'成功',
+        'status':1,
+        'identifier':order.identifier
+    }
+    return JsonResponse(data)
+
+
+def orderdetail(request,identifier):
+    return render(request,'orderdetail.html')
