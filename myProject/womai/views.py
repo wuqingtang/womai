@@ -3,6 +3,8 @@ import random
 import time
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+
+from womai.alipay import alipay
 from womai.models import *
 
 
@@ -393,6 +395,10 @@ def changeallstatus(request):
 
 
 def generate_identifire():
+
+    #这种操作得到的是一个对象
+    # tempstr = str(time.time()) + str(random.random())
+
     tempstr = str(int(time.time())) + str(random.random())
     return tempstr
 
@@ -430,4 +436,40 @@ def order(request):
 
 
 def orderdetail(request,identifier):
-    return render(request,'orderdetail.html')
+    #通过订单号获取订单,然后传到模板渲染
+    order = Order.objects.get(identifier=identifier)
+    ordergoods = order.ordergoods_set.all()
+    return render(request,'orderdetail.html',{'order':order,'ordergoods':ordergoods})
+
+
+def pay(request):
+    identifier = request.GET.get('identifier')
+    order = Order.objects.get(identifier=identifier)
+
+    sum = 0
+    for orderGoods in order.ordergoods_set.all():
+        sum += orderGoods.goods.price * orderGoods.number
+
+    #支付地址
+    url = alipay.direct_pay(
+        subject='订单号:' + 'identifier' + '正在支付',
+        out_trade_no = identifier,
+        total_amount=str(sum),
+        return_url = 'http://39.108.252.43/returnview/'
+    )
+    alipayurl = 'https://openapi.alipaydev.com/gateway.do?{data}'.format(data=url)
+    #拼接上支付网关
+
+    return JsonResponse({'alipayurl': alipayurl, 'status': 1})
+
+
+def appnotify(request):
+
+    #获取订单号,并且修改订单状态
+    print('支付完成')
+
+    return JsonResponse({'msg':'success'})
+
+
+def returnview(request):
+    return redirect('wm:index')

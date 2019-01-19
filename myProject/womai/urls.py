@@ -42,7 +42,15 @@ urlpatterns = [
     url('^order/$',views.order,name='order'),
 
     #订单详情
-    url('^orderdetail/(.+)$',views.orderdetail,name='orderdetail')
+    url('^orderdetail/(.+)/$',views.orderdetail,name='orderdetail'),
+    # 支付
+    url(r'^pay/$', views.pay, name='pay'),
+
+    #支付完成后(服务端)
+    url(r'^appnotify/$', views.appnotify, name='appnotify'),
+
+    # 买家完成后回到哪个页面
+    url(r'^returnview/$', views.returnview, name='returnview'),
 
 
 ]
