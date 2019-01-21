@@ -123,7 +123,7 @@ token，结合session使用
 #首先得封装一个函数，生成token
 def generate_token():
     #token 必须要做到唯一保存在数据库中，常使用时间戳拼接各种字符串
-    token = str(time.time) + str(random.random)
+    token = str(time.time()) + str(random.random())
     s = hashlib.sha224()
     s.update(token.encode('utf-8'))
     return s.hexdigest()
@@ -136,29 +136,24 @@ def generate_pwd(password):
 
 
 #获取token
-def gettoken(request):
-    # 通过session, 获取token
-    token = request.session.get('token')
-    # 通过获取的token，获取对象
-    users = User.objects.filter(token=token)
-    if users.count():
-        user = users.first()
-        name = user.name
-    else:
-        name = None
-    return name
+# def gettoken(request):
+#     # 通过session, 获取token
+#     token = request.session.get('token')
+#     # 通过获取的token，获取对象
+#     users = User.objects.filter(token=token)
+#     if users.count():
+#         user = users.first()
+#         name = user.name
+#     else:
+#         name = None
+#     return name
 
 #首页
 def index(request):
     token = request.session.get('token')
     # 通过获取的token，获取对象
-    users = User.objects.filter(token=token)
-    if users.count():
-        user = users.first()
-        name = user.name
-    else:
-        name = None
-
+    user = User.objects.get(token=token)
+    name = user.name
     imgs = Banner.objects.all()
 
     return render(request,'index.html',context={'name':name,'imgs':imgs})
@@ -185,12 +180,12 @@ def logout(request):
     #第一种，先通过客户端cookie删除 sessionid,再去服务端删除session
     # response = redirect('wm:index')
     # response.delete_cookie('sessionid')
-    # del request.session['username']
+    # del request.session['token']
     # return response
 
-    #第二种，直接在服务端清空
+    # #第二种，直接在服务端清空
     request.session.flush()
-    return redirect('wm:index')
+    return redirect('wm:home')
 
 def login(request):
     if request.method == 'GET':
@@ -215,12 +210,8 @@ def login(request):
 def detail(request):
     token = request.session.get('token')
     # 通过获取的token，获取对象
-    users = User.objects.filter(token=token)
-    if users.count():
-        user = users.first()
-        name = user.name
-    else:
-        name = None
+    user = User.objects.get(token=token)
+    name = user.name
     #在商品列表点击图片后,获取对应的cookie
     index = request.COOKIES.get('index')
 
@@ -243,14 +234,11 @@ def detail(request):
 def cart(request):
     token = request.session.get('token')
     # 通过获取的token，获取对象
-    users = User.objects.filter(token=token)
-    if users.count():
-        user = users.first()
-        name = user.name
-    else:
-        name = None
+
+
     #通过token获取用户,通过用户获取到Cart对象
     user = User.objects.get(token=token)
+    name = user.name
 
     carts = Cart.objects.filter(user=user).exclude(number=0)
     return render(request,'cart.html',{'name':name,'carts':carts})
@@ -259,12 +247,8 @@ def cart(request):
 def shoplist(request):
     token = request.session.get('token')
     # 通过获取的token，获取对象
-    users = User.objects.filter(token=token)
-    if users.count():
-        user = users.first()
-        name = user.name
-    else:
-        name = None
+    user = User.objects.get(token=token)
+    name = user.name
     shoplists = Shoplist.objects.all()
 
     return render(request,'shoplist.html',context={'name':name,'shoplists':shoplists})
@@ -491,3 +475,14 @@ def appnotify(request):
 
 def returnview(request):
     return redirect('wm:index')
+
+
+def home(request):
+    return render(request,'index.html')
+
+
+def ordelist(request,status):
+    token = request.session.get('token')
+    user = User.objects.get(token=token)
+    orders = Order.objects.filter(status=status).filter(user=user)
+    return render(request,'orderlist.html',{'orders':orders})

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>我的购物车_我买网</title>
     <script src="{% static 'js/jquery-1.12.3.js' %}" type="text/javascript" charset="utf-8"></script>
-    <script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
+{#    <script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>#}
     <script src="{% static 'js/cart.js' %}" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/cart-css/cart.css' %}"/>
@@ -23,8 +23,8 @@
                         <div class="mycount">
                             <dl class="count-l">
                                 <dt>您已登录</dt>
-                                <dd class="nopay"><a href="#"> 待付款订单</a><i></i></dd>
-                                <dd><a href="#"> 待签收订单</a></dd>
+                                <dd class="nopay"><a href="{% url 'wm:ordelist' 0 %}"> 待付款订单</a><i></i></dd>
+                                <dd><a href="{% url 'wm:ordelist' 1 %}"> 待签收订单</a></dd>
                                 <dd><a href="#"> 支付卡账户</a></dd>
                                 <dd><a href="#"> 优惠券/团购卡</a></dd>
                                 <dd><a href="#"> 电子礼品卡</a></dd>

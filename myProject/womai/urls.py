@@ -2,8 +2,10 @@ from django.conf.urls import url
 from womai import views
 
 urlpatterns = [
-    #首页
-    url(r'^$',views.index,name='index'),
+
+    url(r'^$',views.home,name='home'),
+    #token首页
+    url(r'^index/$',views.index,name='index'),
 
     #注册后，自动登录，并且状态保持
     url(r'^register/$',views.register,name='register'),
@@ -51,6 +53,8 @@ urlpatterns = [
 
     # 买家完成后回到哪个页面
     url(r'^returnview/$', views.returnview, name='returnview'),
+
+    url(r'^ordelist/(\d+)$', views.ordelist, name='ordelist'),
 
 
 ]

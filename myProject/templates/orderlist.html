@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单</title>
+</head>
+<body>
+    {% for order in orders %}
+        <div>
+            {% if order.status %}
+                用户名:{{ order.user.name }}-订单号:{{ order.identifier }}-已付款
+            {% else %}
+                用户名:{{ order.user.name }}-订单号:{{ order.identifier }}-未付款
+            {% endif %}
+        </div>
+    {% endfor %}
+
+</body>
+</html>
